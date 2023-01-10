@@ -1,6 +1,5 @@
 #include "Arduino.h"
 #include "motors.h"
-#include "potentiometer.h"
 
 // Reference: https://wiki.dfrobot.com/Quad_Motor_Driver_Shield_for_Arduino_SKU_DRI0039#target_2 
 

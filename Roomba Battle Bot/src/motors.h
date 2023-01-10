@@ -13,18 +13,22 @@
 #define E3 5 
 #define E4 6
 
+// Indecies for motors
+#define M1_INDEX 0
+#define M2_INDEX 1
+
 // Constants for potentiometer pins
 #define POTENTIOMETER_PIN_FOR_M1 A0
 #define POTENTIOMETER_PIN_FOR_M2 A1
 
 // Declarations; Tells the compiler that the functions exist somewhere 
-void M1_advance(char speed);
-void M2_advance(char speed);
+void M1_advance(int speed);
+void M2_advance(int speed);
 
-void M1_reverse(char speed);
-void M2_reverse(char speed);
+void M1_reverse(int speed);
+void M2_reverse(int speed);
 
-void M1_move();
-void M2_move();
+void M1_move(int mappedData);
+void M2_move(int mappedData);
 
 #endif /* MOTORS_H */
