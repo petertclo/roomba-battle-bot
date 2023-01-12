@@ -5,10 +5,11 @@
 
 
 void setup() {
-
   // For debugging purposes
   Serial.begin(9600);
   Serial.println("setup");
+
+  pinMode(LED_BUILTIN, OUTPUT);
 
   // Set the pin modes for motors as OUTPUT
   int motorPins [8] = {E1, E2, E3, E4, M1, M2, M3, M4}; 
@@ -27,13 +28,18 @@ void setup() {
 
 void loop() {
   // Reference: https://www.pjrc.com/teensy/td_libs_VirtualWire.html 
+  // https://www.electronics-lab.com/project/using-433mhz-rf-transmitter-receiver-arduino/ 
 
-  uint8_t buf[VW_MAX_MESSAGE_LEN];
-  uint8_t buflen = VW_MAX_MESSAGE_LEN;
+  byte buf[VW_MAX_MESSAGE_LEN];
+  byte buflen = VW_MAX_MESSAGE_LEN;
 
+  digitalWrite(LED_BUILTIN, HIGH);
+
+  Serial.print("Received a message: ");
+
+  // vw_wait_rx();
+  vw_wait_rx_max(1000);
   if (vw_get_message(buf, &buflen)) { // Non-blocking
-
-    digitalWrite(LED_BUILTIN, HIGH);
 
     Serial.print("Got: ");
 
@@ -50,8 +56,15 @@ void loop() {
 
     Serial.println();
     
-    delay(100);
+    delay(1000);
 
     digitalWrite(LED_BUILTIN, LOW);
   }
+
+  Serial.println(vw_have_message());
+
+  delay(1000);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(1000);
+
 }
