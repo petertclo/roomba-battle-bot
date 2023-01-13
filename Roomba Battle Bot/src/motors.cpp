@@ -62,3 +62,25 @@ void M2_move(int mappedData) {
         M2_reverse(speed);
     }
 }
+
+
+void moveMotorsWithVelocityAndAngles(int velocity, int mappedAngle) {
+  int velocityM1 = velocity;
+  int velocityM2 = velocity;
+
+  if (abs(mappedAngle) <= ANGLE_DEAD_ZONE_WIDTH)
+  {
+    mappedAngle = 0;
+  }
+
+  if (mappedAngle <= 0) 
+  {
+    velocityM2 = velocityM2 + abs(mappedAngle);
+  } else 
+  {
+    velocityM1 = velocityM1 + abs(mappedAngle);
+  }
+
+  M1_move(velocityM1);
+  M2_move(velocityM2);
+}
