@@ -4,6 +4,7 @@
 #include <VirtualWire.h>
 
 #define MAX_SPEED 255
+#define MAX_ANGLE 255
 #define MIN_POTENTIOMETER_VAL 0
 #define MAX_POTENTIOMETER_VAL 255
 #define DEAD_ZONE_WIDTH 10
@@ -44,7 +45,7 @@ void loop() {
 
   // Serial.print("Received a message: ");
 
-  // vw_wait_rx_max(1000);
+  vw_wait_rx_max(1000);
 
   // if (vw_get_message(buf, &buflen)) { // Non-blocking
 
@@ -77,22 +78,67 @@ void loop() {
 
   //   digitalWrite(LED_BUILTIN, LOW);
   // }
+  Serial.println("Looping...");
 
+  // Velocity and angle ver
+  if (vw_get_message(buf, &buflen)) { // Non-blocking
 
-  moveMotorsWithVelocityAndAngles(100, -30);
-  delay(1000);
-  moveMotorsWithVelocityAndAngles(50, -20);
-  delay(1000);
-  moveMotorsWithVelocityAndAngles(0, 0);
-  delay(1000);
-  moveMotorsWithVelocityAndAngles(50, 20);
-  delay(1000);
-  moveMotorsWithVelocityAndAngles(100, 30);
-  delay(1000);
+    Serial.print("Received message: ");
+    Serial.print("Got: ");
+    Serial.print(buf[M1_INDEX]);
+    Serial.print(' ');
+    Serial.print(buf[M2_INDEX]);
+    Serial.print(' ');
+
+    int velocity = map(buf[VELOCITY_INDEX], MIN_POTENTIOMETER_VAL, MAX_POTENTIOMETER_VAL, -MAX_SPEED, MAX_SPEED);
+    int angle = map(buf[ANGLE_INDEX], MIN_POTENTIOMETER_VAL, MAX_POTENTIOMETER_VAL, -MAX_ANGLE, MAX_ANGLE);
+
+    Serial.println();
+    Serial.print("VELOCITY: ");
+    Serial.print(velocity);
+    Serial.print(", ANGLE: ");
+    Serial.print(angle);
+    Serial.println();
+
+    if (abs(velocity) <= DEAD_ZONE_WIDTH)
+    {
+      velocity = 0;
+    }
+
+    if (abs(angle) <= ANGLE_DEAD_ZONE_WIDTH) {
+      angle = 0;
+    }
+
+    // if (abs(velocityM1) <= DEAD_ZONE_WIDTH) {
+    //   velocityM1 = 0;
+    // } else if (abs(velocityM2) <= DEAD_ZONE_WIDTH) {
+    //   velocityM2 = 0;
+    // }
+
+    // M1_move(velocityM1);
+    // M2_move(velocityM2);
+
+    moveMotorsWithVelocityAndAngles(velocity, angle);
+
+    Serial.println();
+
+    digitalWrite(LED_BUILTIN, LOW);
+  }
+
+  // moveMotorsWithVelocityAndAngles(100, -30);
+  // delay(1000);
+  // moveMotorsWithVelocityAndAngles(50, -20);
+  // delay(1000);
+  // moveMotorsWithVelocityAndAngles(0, 0);
+  // delay(1000);
+  // moveMotorsWithVelocityAndAngles(50, 20);
+  // delay(1000);
+  // moveMotorsWithVelocityAndAngles(100, 30);
+  // delay(1000);
 
   // M1_move(100);
   // M2_move(-100);
-  // M2_reverse(100);
-  // Serial.println("hello");
+  // // M2_reverse(100);
+  // // Serial.println("hello");
   // delay(500);
 }

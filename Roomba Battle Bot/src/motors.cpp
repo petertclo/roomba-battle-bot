@@ -68,18 +68,23 @@ void moveMotorsWithVelocityAndAngles(int velocity, int mappedAngle) {
   int velocityM1 = velocity;
   int velocityM2 = velocity;
 
+  float velocityPercentM1 = 1.0;
+  float velocityPercentM2 = 1.0;
+
   if (abs(mappedAngle) <= ANGLE_DEAD_ZONE_WIDTH)
   {
     mappedAngle = 0;
   }
 
-  if (mappedAngle <= 0) 
-  {
-    velocityM2 = velocityM2 + abs(mappedAngle);
-  } else 
-  {
-    velocityM1 = velocityM1 + abs(mappedAngle);
+  // mappedAngle <= 0 means turning left 
+  if (mappedAngle <= 0) {
+    velocityPercentM1 = map(mappedAngle, -255, 0, 0.0, 1.0);
+  } else { // Means turning right 
+    velocityPercentM2 = map(mappedAngle, 0, 255, 0.0, 1.0);
   }
+
+  velocityM1 = (int) (velocityM1 * velocityPercentM1);
+  velocityM2 = (int) (velocityM2 * velocityPercentM2);
 
   M1_move(velocityM1);
   M2_move(velocityM2);

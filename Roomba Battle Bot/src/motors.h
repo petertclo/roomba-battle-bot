@@ -17,11 +17,17 @@
 #define M1_INDEX 0
 #define M2_INDEX 1
 
-#define ANGLE_DEAD_ZONE_WIDTH 5
+#define ANGLE_DEAD_ZONE_WIDTH 10
+
+#define MAX_MOTOR_SPEED 255
 
 // Constants for potentiometer pins
 #define POTENTIOMETER_PIN_FOR_M1 A0
 #define POTENTIOMETER_PIN_FOR_M2 A1
+
+// Indecies for velocity and angle
+#define VELOCITY_INDEX 0
+#define ANGLE_INDEX 1
 
 // Declarations; Tells the compiler that the functions exist somewhere 
 void M1_advance(int speed);
