@@ -78,13 +78,26 @@ void moveMotorsWithVelocityAndAngles(int velocity, int mappedAngle) {
 
   // mappedAngle <= 0 means turning left 
   if (mappedAngle <= 0) {
-    velocityPercentM1 = map(mappedAngle, -255, 0, 0.0, 1.0);
+    velocityPercentM1 = (float)map(mappedAngle, -255, 0, 0, 100)/100;
   } else { // Means turning right 
-    velocityPercentM2 = map(mappedAngle, 0, 255, 0.0, 1.0);
+    velocityPercentM2 = (float)map(mappedAngle, 0, 255, 0, 100)/100;
   }
 
   velocityM1 = (int) (velocityM1 * velocityPercentM1);
   velocityM2 = (int) (velocityM2 * velocityPercentM2);
+
+  Serial.print("Velocity M1: ");
+  Serial.print(velocityM1);
+  Serial.print(" ,");
+  Serial.print("Velocity % M1: ");
+  Serial.print(velocityPercentM1);
+  Serial.print(" || ");
+  Serial.print("Velocity M2: ");
+  Serial.print(velocityM2);
+  Serial.print(" ,");
+  Serial.print("Velocity % M2: ");
+  Serial.print(velocityPercentM2);
+  Serial.println();
 
   M1_move(velocityM1);
   M2_move(velocityM2);
