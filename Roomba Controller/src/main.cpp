@@ -26,26 +26,17 @@ void loop() {
   // Reference: https://www.pjrc.com/teensy/td_libs_VirtualWire.html 
   // Reference: https://forum.arduino.cc/t/virtualwire-integer-sending/76650/9 
 
-  // uint8_t potentiometerDataForM1 = readPotentiometerMappedToByte(POTENTIOMETER_PIN_FOR_M1);
-  // uint8_t potentiometerDataForM2 = readPotentiometerMappedToByte(POTENTIOMETER_PIN_FOR_M2);
-
-  // uint8_t potentiometerDataForMotors[] = {potentiometerDataForM1, potentiometerDataForM2};
-
   uint8_t potentiometerDataForVelocity= readPotentiometerMappedToByte(POTENTIOMETER_PIN_FOR_VELOCITY);
-  uint8_t potentiometerDataForAngle = readPotentiometerMappedToByte(POTENTIOMETER_PIN_FOR_ANGLE);
+  uint8_t potentiometerDataForDirection = readPotentiometerMappedToByte(POTENTIOMETER_PIN_FOR_ANGLE);
 
-
-  // int potentiometerDataForVelocity = analogRead(POTENTIOMETER_PIN_FOR_VELOCITY);
-  // int potentiometerDataForAngle = analogRead(POTENTIOMETER_PIN_FOR_ANGLE);
-
-  uint8_t potentiometerDataForMotors[] = {potentiometerDataForVelocity, potentiometerDataForAngle};
+  uint8_t potentiometerDataForMotors[] = {potentiometerDataForVelocity, potentiometerDataForDirection};
 
   Serial.print("Transmitter sent a message: ");
   Serial.print("VELOCITY: ");
   // Serial.print(mappedDataForMotors[0]);
   Serial.print(potentiometerDataForMotors[0]);
 
-  Serial.print(", ANGLE: ");
+  Serial.print(", DIRECTION: ");
   // Serial.println(mappedDataForMotors[1]);
   Serial.print(potentiometerDataForMotors[1]);
 
@@ -55,9 +46,6 @@ void loop() {
   // TODO: https://forum.arduino.cc/t/virtualwire-integer-sending/76650/9 Might be helpful
   vw_send((uint8_t *) potentiometerDataForMotors, sizeof(potentiometerDataForMotors));
 
-  
-
-  // Serial.println(vw_tx_active());
   Serial.println();
   vw_wait_tx();
 

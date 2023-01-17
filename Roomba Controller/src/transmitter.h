@@ -2,8 +2,9 @@
 
 #define TRANSMIT_PIN 8
 #define RECEIVE_PIN 7
+
 #define TRANSMIT_ENABLE_PIN 3
-#define ANTENNA_PIN 9
+
 #define BITS_PER_SECOND 2000
 
 #endif
