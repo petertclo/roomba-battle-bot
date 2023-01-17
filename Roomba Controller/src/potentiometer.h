@@ -4,6 +4,9 @@
 #define POTENTIOMETER_PIN_FOR_M1 A0
 #define POTENTIOMETER_PIN_FOR_M2 A1
 
+#define POTENTIOMETER_PIN_FOR_VELOCITY A0
+#define POTENTIOMETER_PIN_FOR_ANGLE A1
+
 uint8_t readPotentiometerMappedToByte(int pin);
 
 #endif

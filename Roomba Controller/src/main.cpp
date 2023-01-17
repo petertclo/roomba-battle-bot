@@ -26,27 +26,26 @@ void loop() {
   // Reference: https://www.pjrc.com/teensy/td_libs_VirtualWire.html 
   // Reference: https://forum.arduino.cc/t/virtualwire-integer-sending/76650/9 
 
-  // Reads the potentiometers for Motors 1 and 2
-  // int mappedDataForM1 = readPotentiometer(POTENTIOMETER_PIN_FOR_M1);
-  // int mappedDataForM2 = readPotentiometer(POTENTIOMETER_PIN_FOR_M2);
-  // int mappedDataForMotors[] = {mappedDataForM1, mappedDataForM2};
+  // uint8_t potentiometerDataForM1 = readPotentiometerMappedToByte(POTENTIOMETER_PIN_FOR_M1);
+  // uint8_t potentiometerDataForM2 = readPotentiometerMappedToByte(POTENTIOMETER_PIN_FOR_M2);
 
-  // int potentiometerDataForM1 = analogRead(POTENTIOMETER_PIN_FOR_M1);
-  // int potentiometerDataForM2 = analogRead(POTENTIOMETER_PIN_FOR_M2);
+  // uint8_t potentiometerDataForMotors[] = {potentiometerDataForM1, potentiometerDataForM2};
 
-  uint8_t potentiometerDataForM1 = readPotentiometerMappedToByte(POTENTIOMETER_PIN_FOR_M1);
-  uint8_t potentiometerDataForM2 = readPotentiometerMappedToByte(POTENTIOMETER_PIN_FOR_M2);
+  uint8_t potentiometerDataForVelocity= readPotentiometerMappedToByte(POTENTIOMETER_PIN_FOR_VELOCITY);
+  uint8_t potentiometerDataForAngle = readPotentiometerMappedToByte(POTENTIOMETER_PIN_FOR_ANGLE);
 
-  uint8_t potentiometerDataForMotors[] = {potentiometerDataForM1, potentiometerDataForM2};
 
-  // byte mappedDataForMotors[] = {100, 200};
+  // int potentiometerDataForVelocity = analogRead(POTENTIOMETER_PIN_FOR_VELOCITY);
+  // int potentiometerDataForAngle = analogRead(POTENTIOMETER_PIN_FOR_ANGLE);
+
+  uint8_t potentiometerDataForMotors[] = {potentiometerDataForVelocity, potentiometerDataForAngle};
 
   Serial.print("Transmitter sent a message: ");
-  Serial.print("M1: ");
+  Serial.print("VELOCITY: ");
   // Serial.print(mappedDataForMotors[0]);
   Serial.print(potentiometerDataForMotors[0]);
 
-  Serial.print(", M2: ");
+  Serial.print(", ANGLE: ");
   // Serial.println(mappedDataForMotors[1]);
   Serial.print(potentiometerDataForMotors[1]);
 
