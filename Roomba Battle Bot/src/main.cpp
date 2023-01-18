@@ -50,29 +50,29 @@ void loop() {
 
   vw_wait_rx_max(1000);
 
-  if (vw_get_message(buf, &buflen)) { // Non-blocking
+  if (vw_get_message(buf, &buflen)) 
+  { // Non-blocking
+    if (buf[0] == PASS_0 && buf[1] == PASS_1 && buf[2] == PASS_2 && buf[3] == PASS_3) 
+    {
+      int velocity = map(buf[VELOCITY_INDEX], MIN_POTENTIOMETER_VAL, MAX_POTENTIOMETER_VAL, MAX_SPEED, -MAX_SPEED);
+      int angle = map(buf[ANGLE_INDEX], MIN_POTENTIOMETER_VAL, MAX_POTENTIOMETER_VAL, MAX_ANGLE, -MAX_ANGLE);
 
-    int velocity = map(buf[VELOCITY_INDEX], MIN_POTENTIOMETER_VAL, MAX_POTENTIOMETER_VAL, MAX_SPEED, -MAX_SPEED);
-    int angle = map(buf[ANGLE_INDEX], MIN_POTENTIOMETER_VAL, MAX_POTENTIOMETER_VAL, MAX_ANGLE, -MAX_ANGLE);
+      Serial.print("VELOCITY: ");
+      Serial.print(velocity);
+      Serial.print(", ANGLE: ");
+      Serial.print(angle);
+      Serial.println();
 
-    Serial.print("VELOCITY: ");
-    Serial.print(velocity);
-    Serial.print(", ANGLE: ");
-    Serial.print(angle);
-    Serial.println();
+      moveMotorsWithVelocityAndAngles(velocity, angle);
 
-    
+      Serial.print("Time since last message: ");
+      Serial.println(millis() - previousTime);
 
-    
+      previousTime = millis();
+    }
 
-    moveMotorsWithVelocityAndAngles(velocity, angle);
-
-    Serial.print("Time since last message: ");
-    Serial.println(millis() - previousTime);
-
-    previousTime = millis();
-
-  } else if (millis() - currentTime > timeInterval)
+  } 
+  else if (millis() - currentTime > timeInterval)
   {
     
     moveMotorsWithVelocityAndAngles(0, 0);

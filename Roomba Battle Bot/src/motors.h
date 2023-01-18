@@ -28,8 +28,8 @@
 #define POTENTIOMETER_PIN_FOR_M2 A1
 
 // Indecies for velocity and angle
-#define VELOCITY_INDEX 0
-#define ANGLE_INDEX 1
+#define VELOCITY_INDEX 4
+#define ANGLE_INDEX 5
 
 // Declarations; Tells the compiler that the functions exist somewhere 
 void M1_advance(int speed);
