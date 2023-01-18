@@ -21,13 +21,19 @@ void setup() {
 
 }
 
+unsigned long previousTime = millis();
 
 void loop() {
+  unsigned long currentTime = millis();
   // Reference: https://www.pjrc.com/teensy/td_libs_VirtualWire.html 
   // Reference: https://forum.arduino.cc/t/virtualwire-integer-sending/76650/9 
 
   uint8_t potentiometerDataForVelocity= readPotentiometerMappedToByte(POTENTIOMETER_PIN_FOR_VELOCITY);
   uint8_t potentiometerDataForDirection = readPotentiometerMappedToByte(POTENTIOMETER_PIN_FOR_ANGLE);
+
+  // These values are multiplied by -1 due to wiring issue
+  // potentiometerDataForVelocity - potentiometerDataForVelocity * -1;
+  // potentiometerDataForDirection = potentiometerDataForDirection * -1;
 
   uint8_t potentiometerDataForMotors[] = {potentiometerDataForVelocity, potentiometerDataForDirection};
 
@@ -48,6 +54,8 @@ void loop() {
 
   Serial.println();
   vw_wait_tx();
+
+  Serial.print(millis() - currentTime);
 
   digitalWrite(LED_BUILTIN, LOW);
 }
