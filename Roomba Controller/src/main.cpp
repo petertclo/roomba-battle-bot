@@ -31,11 +31,7 @@ void loop() {
   uint8_t potentiometerDataForVelocity= readPotentiometerMappedToByte(POTENTIOMETER_PIN_FOR_VELOCITY);
   uint8_t potentiometerDataForDirection = readPotentiometerMappedToByte(POTENTIOMETER_PIN_FOR_ANGLE);
 
-  // These values are multiplied by -1 due to wiring issue
-  // potentiometerDataForVelocity - potentiometerDataForVelocity * -1;
-  // potentiometerDataForDirection = potentiometerDataForDirection * -1;
-
-  uint8_t potentiometerDataForMotors[] = {potentiometerDataForVelocity, potentiometerDataForDirection};
+  uint8_t potentiometerDataForMotors[] = {PASS_0, PASS_1, PASS_2, PASS_3, potentiometerDataForVelocity, potentiometerDataForDirection};
 
   Serial.print("Transmitter sent a message: ");
   Serial.print("VELOCITY: ");
