@@ -17,9 +17,11 @@
 #define M1_INDEX 0
 #define M2_INDEX 1
 
+#define VELOCITY_DEAD_ZONE_WIDTH 10
 #define ANGLE_DEAD_ZONE_WIDTH 5
 
-#define MAX_MOTOR_SPEED 255
+#define MAX_SPEED 255
+#define MAX_ANGLE 255
 
 // Constants for potentiometer pins
 #define POTENTIOMETER_PIN_FOR_M1 A0

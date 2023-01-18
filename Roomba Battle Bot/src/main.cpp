@@ -37,6 +37,7 @@ void setup() {
 }
 
 
+
 void loop() {
   unsigned long currentTime = millis();
   // Reference: https://www.pjrc.com/teensy/td_libs_VirtualWire.html 
@@ -49,12 +50,10 @@ void loop() {
 
   vw_wait_rx_max(1000);
 
-  Serial.println("Looping...");
-
   if (vw_get_message(buf, &buflen)) { // Non-blocking
 
-    int velocity = map(buf[VELOCITY_INDEX], MIN_POTENTIOMETER_VAL, MAX_POTENTIOMETER_VAL, -MAX_SPEED, MAX_SPEED);
-    int angle = map(buf[ANGLE_INDEX], MIN_POTENTIOMETER_VAL, MAX_POTENTIOMETER_VAL, -MAX_ANGLE, MAX_ANGLE);
+    int velocity = map(buf[VELOCITY_INDEX], MIN_POTENTIOMETER_VAL, MAX_POTENTIOMETER_VAL, MAX_SPEED, -MAX_SPEED);
+    int angle = map(buf[ANGLE_INDEX], MIN_POTENTIOMETER_VAL, MAX_POTENTIOMETER_VAL, MAX_ANGLE, -MAX_ANGLE);
 
     Serial.print("VELOCITY: ");
     Serial.print(velocity);
@@ -62,32 +61,20 @@ void loop() {
     Serial.print(angle);
     Serial.println();
 
-    if (abs(velocity) <= DEAD_ZONE_WIDTH)
-    {
-      velocity = 0;
-    }
+    
 
-    if (abs(angle) <= ANGLE_DEAD_ZONE_WIDTH) {
-      angle = 0;
-    }
-
-    // if (abs(velocityM1) <= DEAD_ZONE_WIDTH) {
-    //   velocityM1 = 0;
-    // } else if (abs(velocityM2) <= DEAD_ZONE_WIDTH) {
-    //   velocityM2 = 0;
-    // }
-
-    // M1_move(velocityM1);
-    // M2_move(velocityM2);
+    
 
     moveMotorsWithVelocityAndAngles(velocity, angle);
 
-    Serial.println();
+    Serial.print("Time since last message: ");
+    Serial.println(millis() - previousTime);
 
-    digitalWrite(LED_BUILTIN, LOW);
-  } else if (previousTime - currentTime > timeInterval)
+    previousTime = millis();
+
+  } else if (millis() - currentTime > timeInterval)
   {
-    previousTime = currentTime;
+    
     moveMotorsWithVelocityAndAngles(0, 0);
   }
 
