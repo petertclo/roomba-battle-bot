@@ -1,12 +1,11 @@
 #ifndef TRANSMITTER_H
 
+// Arduino pins for transceiver, and bps
 #define TRANSMIT_PIN 8
 #define RECEIVE_PIN 7
-
-#define TRANSMIT_ENABLE_PIN 3
-
 #define BITS_PER_SECOND 2000
 
+// Four predetermined passcodes for sending and receiving data
 #define PASS_0 231
 #define PASS_1 110
 #define PASS_2 88
