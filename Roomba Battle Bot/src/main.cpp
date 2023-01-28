@@ -29,13 +29,12 @@ void setup() {
   // Sets up the receiver on the robot
   vw_set_rx_pin(RECEIVE_PIN);
 
+  // Although transmitter is not on the robot, its pin is set to prevent VirtualWire from using its default pin
   vw_set_tx_pin(TRANSMIT_PIN);
 
   vw_setup(BITS_PER_SECOND);
   vw_rx_start();
-
 }
-
 
 
 void loop() {
@@ -51,19 +50,23 @@ void loop() {
   vw_wait_rx_max(1000);
 
   if (vw_get_message(buf, &buflen)) 
-  { // Non-blocking
+  {
+    // The passcodes need to match before the robot executes the instruction
     if (buf[0] == PASS_0 && buf[1] == PASS_1 && buf[2] == PASS_2 && buf[3] == PASS_3) 
     {
+      // Note, the [0, 255] is being mapped to [255, -255] instead of [-255, 255] due to wiring issues with the potentiometers
       int velocity = map(buf[VELOCITY_INDEX], MIN_POTENTIOMETER_VAL, MAX_POTENTIOMETER_VAL, MAX_SPEED, -MAX_SPEED);
-      int angle = map(buf[ANGLE_INDEX], MIN_POTENTIOMETER_VAL, MAX_POTENTIOMETER_VAL, MAX_ANGLE, -MAX_ANGLE);
+      int direction = map(buf[DIRECTION_INDEX], MIN_POTENTIOMETER_VAL, MAX_POTENTIOMETER_VAL, MAX_DIRECTION, -MAX_DIRECTION);
 
+      // Debugging purposes
       Serial.print("VELOCITY: ");
       Serial.print(velocity);
-      Serial.print(", ANGLE: ");
-      Serial.print(angle);
+      Serial.print(", DIRECTION: ");
+      Serial.print(direction);
       Serial.println();
 
-      moveMotorsWithVelocityAndAngles(velocity, angle);
+      // Moves the robot with given velocity and direction
+      moveMotorsWithVelocityAndAngles(velocity, direction);
 
       Serial.print("Time since last message: ");
       Serial.println(millis() - previousTime);
@@ -74,9 +77,7 @@ void loop() {
   } 
   else if (millis() - currentTime > timeInterval)
   {
-    
+    // Stops the robot for safety reason after not receiving any data for over `timeInterval` 
     moveMotorsWithVelocityAndAngles(0, 0);
   }
-
-  
 }

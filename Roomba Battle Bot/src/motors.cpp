@@ -64,9 +64,7 @@ void M2_move(int mappedData) {
 }
 
 
-void moveMotorsWithVelocityAndAngles(int velocity, int angle) {
-
-  // These values are multiplied by -1 due to wiring issue
+void moveMotorsWithVelocityAndAngles(int velocity, int direction) {
 
   int velocityM1 = velocity;
   int velocityM2 = velocity;
@@ -74,26 +72,32 @@ void moveMotorsWithVelocityAndAngles(int velocity, int angle) {
   float velocityPercentM1 = 1.0;
   float velocityPercentM2 = 1.0;
 
+  // Ensures that velocity and direction are less sensitive around 0 (neutral) for easier control of the robot
   if (abs(velocity) <= VELOCITY_DEAD_ZONE_WIDTH)
   {
     velocity = 0;
   }
-
-  if (abs(angle) <= ANGLE_DEAD_ZONE_WIDTH) 
+  if (abs(direction) <= DIRECTION_DEAD_ZONE_WIDTH) 
   {
-      angle = 0;
+      direction = 0;
   }
 
-  // mappedAngle <= 0 means turning left 
-  if (angle < 0) {
-    velocityPercentM1 = (float) map(angle, -MAX_ANGLE, 0, 0, 100)/100;
-  } else { // Means turning right 
-    velocityPercentM2 = (float) map(angle, MAX_ANGLE, 0, 0, 100)/100;
+
+  if (direction < 0) 
+  {
+    // Turns left by slowing down the left wheel (M1)
+    velocityPercentM1 = (float) map(direction, -MAX_DIRECTION, 0, 0, 100)/100;
+  } 
+  else 
+  { 
+    // Turns right by slowing down the right wheel (M2)
+    velocityPercentM2 = (float) map(direction, MAX_DIRECTION, 0, 0, 100)/100;
   }
 
   velocityM1 = (int) (velocityM1 * velocityPercentM1);
   velocityM2 = (int) (velocityM2 * velocityPercentM2);
 
+  // Debugging purposes
   Serial.print("Velocity M1: ");
   Serial.print(velocityM1);
   Serial.print(" ,");

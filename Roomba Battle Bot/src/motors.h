@@ -13,25 +13,20 @@
 #define E3 5 
 #define E4 6
 
-// Indecies for motors
-#define M1_INDEX 0
-#define M2_INDEX 1
-
 #define VELOCITY_DEAD_ZONE_WIDTH 10
-#define ANGLE_DEAD_ZONE_WIDTH 5
+#define DIRECTION_DEAD_ZONE_WIDTH 5
 
 #define MAX_SPEED 255
-#define MAX_ANGLE 255
+#define MAX_DIRECTION 255
 
 // Constants for potentiometer pins
 #define POTENTIOMETER_PIN_FOR_M1 A0
 #define POTENTIOMETER_PIN_FOR_M2 A1
 
-// Indecies for velocity and angle
+// Indecies for velocity and direction
 #define VELOCITY_INDEX 4
-#define ANGLE_INDEX 5
+#define DIRECTION_INDEX 5
 
-// Declarations; Tells the compiler that the functions exist somewhere 
 void M1_advance(int speed);
 void M2_advance(int speed);
 
