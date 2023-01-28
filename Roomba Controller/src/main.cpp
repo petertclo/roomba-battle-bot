@@ -36,11 +36,11 @@ void loop() {
   Serial.print("Transmitter sent a message: ");
   Serial.print("VELOCITY: ");
   // Serial.print(mappedDataForMotors[0]);
-  Serial.print(potentiometerDataForMotors[0]);
+  Serial.print(potentiometerDataForMotors[VELOCITY_INDEX]);
 
   Serial.print(", DIRECTION: ");
   // Serial.println(mappedDataForMotors[1]);
-  Serial.print(potentiometerDataForMotors[1]);
+  Serial.print(potentiometerDataForMotors[ANGLE_INDEX]);
 
   // The LED light is flashed on and off to indicate data transmission
   digitalWrite(LED_BUILTIN, HIGH);

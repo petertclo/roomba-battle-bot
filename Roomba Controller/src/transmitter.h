@@ -12,5 +12,8 @@
 #define PASS_2 88
 #define PASS_3 199
 
+// Indecies for velocity and angle
+#define VELOCITY_INDEX 4
+#define ANGLE_INDEX 5
 
 #endif
